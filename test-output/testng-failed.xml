@@ -3,11 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="com.psl.guru99.Login">
+      <class name="com.psl.guru99.ParameterLogin">
         <methods>
-          <include name="login"/>
+          <include name="testSetup"/>
+          <include name="VerifyLogin" invocation-numbers="1 2 3"/>
         </methods>
-      </class> <!-- com.psl.guru99.Login -->
+      </class> <!-- com.psl.guru99.ParameterLogin -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
