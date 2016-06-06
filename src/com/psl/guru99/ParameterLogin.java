@@ -25,7 +25,7 @@ public class ParameterLogin {
 	private By userid = By.name("uid");
 	private By password = By.name("password");
 	private By loginBtn = By.name("btnLogin");
-	//private By logoutLnk = By.xpath("html/body/div[2]/div/ul/li[15]/a");
+	
 	
 	
 	@BeforeClass
