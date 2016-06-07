@@ -1,7 +1,5 @@
 package com.psl.guru99.utils;
 
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,7 +23,7 @@ public class DatabaseConnection {
 	/*Creating the Connection object to take the parameter as Database Type
 	base on the data type this code will create the connection object*/
 	
-	public Connection GetConnection(String dbname) {
+	public Connection CreateConnection(String dbname) {
 		
 		try {
 			Properties prop = new Properties();
@@ -39,7 +37,10 @@ public class DatabaseConnection {
 			String password = prop.getProperty(dbname+".PassWord");
 			
 			Class.forName(driver);
+			System.out.println("Creating the connection....");
+			
 			con = DriverManager.getConnection(url, username, password);
+			con.setAutoCommit(false);
 			
 			System.out.println("Connection is created Successfully for "+dbname + "Database");
 			return con;
@@ -51,10 +52,10 @@ public class DatabaseConnection {
 			System.out.println("The file can not be able to read");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e);
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e);
 			e.printStackTrace();
 		}
 		return null;
@@ -63,20 +64,40 @@ public class DatabaseConnection {
 
 	/*This method is used to create the result set for the given query*/
 	
-	public ResultSet CreateResultSet(String Query){
+	public ResultSet ResultSetforSelect(String Query){
 		
 		try {
 			stmt = con.createStatement();
+			System.out.println("Retriving the data for the given query.....");
 			rs = stmt.executeQuery(Query);
 			rsmd = rs.getMetaData();
 			return rs;
+			
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println(e);
 			e.printStackTrace();
 		}
 		return null;
 		
 		
+	}
+	
+	/*This method is used to update the data for given table*/
+	
+	public void ResultSetforUpdate(String Query){
+			
+		try {
+			stmt = con.createStatement();
+			System.out.println("Executing the update table query.....");
+			stmt.executeUpdate(Query);
+			con.commit();
+			System.out.println("Updated the table successfully");
+						
+		} catch (SQLException e) {
+			System.out.println(e);
+			e.printStackTrace();
+		}
 	}
 	
 }
