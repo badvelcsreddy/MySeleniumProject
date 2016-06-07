@@ -1,4 +1,5 @@
-package com.psl.guru99;
+package com.psl.guru99.whiteboard;
+
 
 public class Read {
 

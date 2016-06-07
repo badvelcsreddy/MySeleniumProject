@@ -1,4 +1,4 @@
-package com.psl.guru99;
+package com.psl.guru99.whiteboard;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

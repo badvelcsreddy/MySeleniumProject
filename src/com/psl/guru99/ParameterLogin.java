@@ -12,6 +12,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.psl.guru99.whiteboard.ReadTestData;
+
 public class ParameterLogin {
 	
 	private static final String ActualStatus = "Manger Id : mngr38718";

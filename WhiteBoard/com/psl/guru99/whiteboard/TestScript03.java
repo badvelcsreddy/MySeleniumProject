@@ -1,4 +1,4 @@
-package com.psl.guru99;
+package com.psl.guru99.whiteboard;
 
 /*
 Script for Day 3
@@ -6,6 +6,7 @@ Script for Day 3
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;

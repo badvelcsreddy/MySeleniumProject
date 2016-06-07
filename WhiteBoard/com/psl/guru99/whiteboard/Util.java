@@ -1,4 +1,4 @@
-package com.psl.guru99;
+package com.psl.guru99.whiteboard;
 
 import java.io.File;
 //Needed to make Selenium work with Excel
