@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,12 +20,13 @@ public class ReadFromExcel {
 	public String fileName = null;
 	public String sheetName = null;
 	Workbook wb = null;
+	Sheet excelSheet = null;
+	@SuppressWarnings("rawtypes")
+	List excelData = new ArrayList();
 	
-	public String[][] ReadData(String filePath, String fileName, String sheetName) {
-		
-		String[][] Data = null;
-		
-		
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List ReadData(String filePath, String fileName, String sheetName) {
+
 		File file = new File(filePath+"\\"+fileName);
 		try {
 			FileInputStream fis = new FileInputStream(file);
@@ -39,18 +44,20 @@ public class ReadFromExcel {
 				wb = new HSSFWorkbook(fis);
 			}
 			
-			Sheet sheet = wb.getSheet(sheetName);
-			int totalRows = sheet.getLastRowNum() - sheet.getFirstRowNum();
-			
-			for (int i = 1; i <= totalRows; i++) {
-				Row row = sheet.getRow(i);
-				for (int j = 0; j < row.getLastCellNum(); j++ ){
-					System.out.print(row.getCell(j).getStringCellValue() +"||");
-				}
-				System.out.println();
-			}
-				
-			
+			 excelSheet = wb.getSheet(sheetName);
+			 Iterator rows = excelSheet.rowIterator();
+			 while (rows.hasNext()) {
+	                HSSFRow row = (HSSFRow) rows.next();
+	                Iterator cells = row.cellIterator();
+	  
+	                List cellData = new ArrayList();
+	                while (cells.hasNext()) {
+	                    HSSFCell cell = (HSSFCell) cells.next();
+	                    cellData.add(cell);
+	                }
+	  
+	                excelData .add(cellData);
+	            }
 		} catch (FileNotFoundException e) {
 			System.out.println("The provided File " + "'"+ file + "'" + " does not exist");
 			e.printStackTrace();
@@ -58,10 +65,32 @@ public class ReadFromExcel {
 			System.out.println("The provided File " + "'"+ file + "'" + " can not be read");
 			e.printStackTrace();
 		} 
-		return Data;
-		
-		
+		return excelData;
 	}
 		
-	
+	@SuppressWarnings("rawtypes")
+	public void ShowExcelData(List Data){
+		
+		
+		 for (int rowNum = 1; rowNum < excelData.size(); rowNum++) {
+             
+             List list = (List) excelData.get(rowNum);
+              
+             for (int cellNum = 0; cellNum < list.size(); cellNum++) {
+                  
+                 HSSFCell cell = (HSSFCell) list.get(cellNum);
+                  
+                 if(cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
+                     System.out.print(cell.getRichStringCellValue().getString() + " ");
+                 } else if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC) {
+                     System.out.print(cell.getNumericCellValue() + " ");
+                 } else if(cell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN) {
+                     System.out.println(cell.getBooleanCellValue() + " ");
+                 }
+             }
+             System.out.println("");
+         }
+		
+	}
 }
+

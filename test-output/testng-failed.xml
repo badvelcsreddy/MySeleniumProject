@@ -6,7 +6,7 @@
       <class name="com.psl.guru99.ParameterLogin">
         <methods>
           <include name="testSetup"/>
-          <include name="VerifyLogin" invocation-numbers="1 2 3"/>
+          <include name="VerifyLogin"/>
         </methods>
       </class> <!-- com.psl.guru99.ParameterLogin -->
     </classes>
